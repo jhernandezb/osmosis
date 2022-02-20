@@ -157,9 +157,11 @@ func (k Keeper) CreateGauge(ctx sdk.Context, isPerpetual bool, owner sdk.AccAddr
 func (k Keeper) AddToGaugeRewards(ctx sdk.Context, owner sdk.AccAddress, coins sdk.Coins, gaugeID uint64) error {
 	gauge, err := k.GetGaugeByID(ctx, gaugeID)
 	if err != nil {
+		ctx.Logger().Info("Get Gauge By ID")
 		return err
 	}
 	if err := k.bk.SendCoinsFromAccountToModule(ctx, owner, types.ModuleName, coins); err != nil {
+		ctx.Logger().Info("Send Coins From Account to Module")
 		return err
 	}
 
